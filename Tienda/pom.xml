@@ -5,12 +5,6 @@
     <artifactId>Tienda</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    
-    
-    
-    
-    
-    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>9</maven.compiler.source>
@@ -19,23 +13,20 @@
         <classpathPrefix>libs/</classpathPrefix>
         <addClasspath>true</addClasspath>
     </properties>
-
-  <dependencies>
+    <dependencies>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.31</version>
-             <scope>runtime</scope>
+            <scope>runtime</scope>
         </dependency>
-      <dependency>
+        <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>11.2.2.jre18</version>
-             <scope>runtime</scope>
+            <scope>runtime</scope>
         </dependency>
-    
-  </dependencies>
-    
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -52,31 +43,22 @@
                     </archive>
                 </configuration>
             </plugin>
-            
-            
-            
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/libs</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-            
-            
-            
-            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
     </build>
-  
-</project>
+  </project>
