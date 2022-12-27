@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package jsbsan.tienda.Vista;
+package Vista;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -39,7 +39,7 @@ public class ENTRADA extends javax.swing.JFrame {
         //asigno icono al JPanel.
         setIconImage(getIconImage());
         
-        Clases.CConexion objetoConexion = new Clases.CConexion() ;
+        MODELO.CConexion objetoConexion = new MODELO.CConexion() ;
         
         objetoConexion.estableceConexión();
         
@@ -172,6 +172,10 @@ public class ENTRADA extends javax.swing.JFrame {
 
     private void jButtonComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprobarActionPerformed
         // TODO add your handling code here:
+       GestionarProductos v2 = new GestionarProductos();
+       this.setVisible(false);
+       v2.setVisible(true);
+       
     }//GEN-LAST:event_jButtonComprobarActionPerformed
 
     private void jButtonConfigurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfigurarActionPerformed

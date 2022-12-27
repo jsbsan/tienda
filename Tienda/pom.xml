@@ -38,7 +38,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
-                            <mainClass>jsbsan.tienda.Vista.ENTRADA</mainClass>
+                            <mainClass>Vista.ENTRADA</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
