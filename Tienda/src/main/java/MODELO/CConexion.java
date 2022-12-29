@@ -29,6 +29,7 @@ public class CConexion {
     private String CONFIG_TEXT_FILE = "configuracion.properties";
     private final Properties pro = new Properties();
 
+    public Boolean mostrado = false;
     String usuario = "tendero";
     String contrasenia = "tendero12345abc";
     String bd = "TIENDA";
@@ -72,7 +73,11 @@ public class CConexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection(cadena, usuario, contrasenia);
+            if (this.mostrado == false) {
             JOptionPane.showMessageDialog(null, "Se conectó correctamente a la bd: " + bd);
+            mostrado=true;
+            }
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Problemas con la conexión: " + e.toString());
         }
