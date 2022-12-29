@@ -25,7 +25,6 @@ public class CConexion {
     Connection conectar;
 
     //Nota: El fichero "configuracion.properties" hay que copiarlo manualemente al directorio dondde este el programa .jar
-    
     private String CONFIG_TEXT_FILE = "configuracion.properties";
     private final Properties pro = new Properties();
 
@@ -40,27 +39,29 @@ public class CConexion {
 
     public Connection estableceConexión() {
         try {
-            pro.load(new FileInputStream(new File(CONFIG_TEXT_FILE)));
-            usuario = pro.getProperty("usuario", usuario);
-            contrasenia = pro.getProperty("contrasenia", contrasenia);
-            bd = pro.getProperty("bd", bd);
-            ip = pro.getProperty("ip", ip);
-            puerto = pro.getProperty("puerto", puerto);
+            File archivo_configuracion = new File(CONFIG_TEXT_FILE);
+            if (archivo_configuracion.exists()) {
+                pro.load(new FileInputStream(archivo_configuracion));
+                usuario = pro.getProperty("usuario", usuario);
+                contrasenia = pro.getProperty("contrasenia", contrasenia);
+                bd = pro.getProperty("bd", bd);
+                ip = pro.getProperty("ip", ip);
+                puerto = pro.getProperty("puerto", puerto);
 
-            System.out.println("usuario: " + usuario);
-            System.out.println("contreña: " + contrasenia);
-            System.out.println("bd: " + bd);
-            System.out.println("ip: " + ip);
-            System.out.println("puerto: " + puerto);
-            
-            pro.setProperty("usuario",usuario);
-            pro.setProperty("contrasenia",contrasenia);
-            pro.setProperty("ip",ip);
-            pro.setProperty("bd",bd);
-            pro.setProperty("puerto",puerto);
-            
-            pro.store(new FileWriter(CONFIG_TEXT_FILE),"comentario de prueba");
-            
+                System.out.println("usuario: " + usuario);
+                System.out.println("contreña: " + contrasenia);
+                System.out.println("bd: " + bd);
+                System.out.println("ip: " + ip);
+                System.out.println("puerto: " + puerto);
+            }
+            pro.setProperty("usuario", usuario);
+            pro.setProperty("contrasenia", contrasenia);
+            pro.setProperty("ip", ip);
+            pro.setProperty("bd", bd);
+            pro.setProperty("puerto", puerto);
+
+            pro.store(new FileWriter(CONFIG_TEXT_FILE), "comentario de prueba");
+
             cadena = "jdbc:mysql://" + ip + ":" + puerto + "/" + bd;
 
         } catch (FileNotFoundException e) {
@@ -74,10 +75,10 @@ public class CConexion {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection(cadena, usuario, contrasenia);
             if (this.mostrado == false) {
-            JOptionPane.showMessageDialog(null, "Se conectó correctamente a la bd: " + bd);
-            mostrado=true;
+                JOptionPane.showMessageDialog(null, "Se conectó correctamente a la bd: " + bd);
+                mostrado = true;
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Problemas con la conexión: " + e.toString());
         }
