@@ -9,15 +9,16 @@ import MODELO.PRODUCTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.*;
+
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import javax.swing.table.DefaultTableModel;
-import java.util.Date;
 import java.text.SimpleDateFormat;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 /**
@@ -31,10 +32,17 @@ public class GestionarProductos extends javax.swing.JFrame {
      */
     public GestionarProductos() {
         initComponents();
+         //asigno icono al JPanel.
+        setIconImage(getIconImage());
+        
         listar();
 
     }
-
+   @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/productos.png"));
+        return retValue;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -272,7 +280,7 @@ public class GestionarProductos extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial Black", 3, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("GESTIÓN DE PRODUCTOS");
         jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
