@@ -68,6 +68,7 @@ public class GestionarProductos extends javax.swing.JFrame {
         Tabladatos = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jButtonSalir = new javax.swing.JButton();
+        jButtonGenerarReporteLIistaPVP = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextCoste = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -155,12 +156,22 @@ public class GestionarProductos extends javax.swing.JFrame {
             }
         });
 
+        jButtonGenerarReporteLIistaPVP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reporte.png"))); // NOI18N
+        jButtonGenerarReporteLIistaPVP.setText("Reporte Lista de Productos y PVP");
+        jButtonGenerarReporteLIistaPVP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerarReporteLIistaPVPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButtonGenerarReporteLIistaPVP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(455, 455, 455)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -168,7 +179,9 @@ public class GestionarProductos extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonSalir)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSalir)
+                    .addComponent(jButtonGenerarReporteLIistaPVP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -179,7 +192,7 @@ public class GestionarProductos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -463,7 +476,8 @@ public class GestionarProductos extends javax.swing.JFrame {
            // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
             JasperReport reporte=(JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportProductos.jasper"));
             JasperPrint jp = JasperFillManager.fillReport(reporte,null, cn);
-            JasperViewer.viewReport(jp,true);
+          JasperViewer jv = new JasperViewer(jp,false);
+          jv.setVisible(true);
         } catch (Exception e) {
             System.err.println("Error al generar el reporte -> "+e.getMessage());
         }
@@ -471,6 +485,25 @@ public class GestionarProductos extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButtonGenerarReporteActionPerformed
+
+    private void jButtonGenerarReporteLIistaPVPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarReporteLIistaPVPActionPerformed
+        // TODO add your handling code here:
+         CConexion con = new CConexion();
+        con.mostrado = true;
+        Connection cn;
+      cn = con.estableceConexión();
+        try {
+            cn = con.estableceConexión();
+           // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
+            JasperReport reporte=(JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportSoloListaPreciosProductos.jasper"));
+            JasperPrint jp = JasperFillManager.fillReport(reporte,null, cn);
+          JasperViewer jv = new JasperViewer(jp,false);
+       jv.setVisible(true);
+          
+        } catch (Exception e) {
+            System.err.println("Error al generar el reporte -> "+e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonGenerarReporteLIistaPVPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -701,6 +734,7 @@ public class GestionarProductos extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonGenerarReporte;
+    private javax.swing.JButton jButtonGenerarReporteLIistaPVP;
     private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonSalir;
