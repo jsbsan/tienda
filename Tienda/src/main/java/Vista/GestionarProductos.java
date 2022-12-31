@@ -21,6 +21,17 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Image;
 import java.awt.Toolkit;
+
+/* Reportes */
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
+
 /**
  *
  * @author JSBSAN
@@ -79,6 +90,7 @@ public class GestionarProductos extends javax.swing.JFrame {
         jButtonModificar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
         jButtonListar = new javax.swing.JButton();
+        jButtonGenerarReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de Productos");
@@ -319,6 +331,14 @@ public class GestionarProductos extends javax.swing.JFrame {
             }
         });
 
+        jButtonGenerarReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reporte.png"))); // NOI18N
+        jButtonGenerarReporte.setText("Reporte");
+        jButtonGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerarReporteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -332,17 +352,23 @@ public class GestionarProductos extends javax.swing.JFrame {
                 .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBorrar)
-                    .addComponent(jButtonModificar)
-                    .addComponent(jButtonListar)
-                    .addComponent(jButtonAgregar))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBorrar)
+                            .addComponent(jButtonModificar)
+                            .addComponent(jButtonListar)
+                            .addComponent(jButtonAgregar)))
+                    .addComponent(jButtonGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -424,6 +450,27 @@ public class GestionarProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         modificar();
     }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarReporteActionPerformed
+        // TODO add your handling code here:
+        
+        CConexion con = new CConexion();
+        con.mostrado = true;
+        Connection cn;
+      cn = con.estableceConexión();
+        try {
+            cn = con.estableceConexión();
+           // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
+            JasperReport reporte=(JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportProductos.jasper"));
+            JasperPrint jp = JasperFillManager.fillReport(reporte,null, cn);
+            JasperViewer.viewReport(jp,true);
+        } catch (Exception e) {
+            System.err.println("Error al generar el reporte -> "+e.getMessage());
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButtonGenerarReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -653,6 +700,7 @@ public class GestionarProductos extends javax.swing.JFrame {
     public javax.swing.JTable Tabladatos;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JButton jButtonGenerarReporte;
     private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonSalir;
