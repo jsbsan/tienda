@@ -4,7 +4,22 @@
  */
 package Vista;
 
+
+
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.util.Properties;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+
+import java.io.File;
 
 /**
  *
@@ -15,8 +30,27 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
     /**
      * Creates new form FormConfigurarConexion
      */
+    private String CONFIG_TEXT_FILE = "configuracion.properties";
+    private final Properties pro = new Properties();
+    String usuario = "tendero";
+    String contrasenia = "tendero12345abc";
+    String bd = "TIENDA";
+    String ip = "192.168.0.11";
+    String puerto = "3306";
+
+    String cadena ;
+
     public FormConfigurarConexion() {
         initComponents();
+        
+        // poner datos iniciales de la conexion:
+       jTextFieldUsuario.setText(usuario);
+        jTextFieldContrasenia.setText(contrasenia);
+    jTextFieldBd.setText(bd);
+    jTextFieldIp.setText(ip);
+    jTextFieldPuerto.setText(puerto);
+    cadena = "jdbc:mysql://" + ip + ":" + puerto + "/" + bd;
+    jLabelicono.setVisible((false));
     }
 
     /**
@@ -28,6 +62,7 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -40,9 +75,22 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
         jTextFieldBd = new javax.swing.JTextField();
         jTextFieldIp = new javax.swing.JTextField();
         jTextFieldPuerto = new javax.swing.JTextField();
-        jButtonActualizarConexion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jPaneliCONO = new javax.swing.JPanel();
+        jButtonActualizarConexion = new javax.swing.JButton();
+        jLabelicono = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,13 +184,6 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonActualizarConexion.setText("Actualizar Conexión");
-        jButtonActualizarConexion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActualizarConexionActionPerformed(evt);
-            }
-        });
-
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/base-de-datos.png"))); // NOI18N
         jLabel6.setBorder(new javax.swing.border.MatteBorder(null));
@@ -152,8 +193,7 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -163,20 +203,44 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButtonActualizarConexion.setText("Actualizar Conexión");
+        jButtonActualizarConexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarConexionActionPerformed(evt);
+            }
+        });
+
+        jLabelicono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/certificate_fill.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPaneliCONOLayout = new javax.swing.GroupLayout(jPaneliCONO);
+        jPaneliCONO.setLayout(jPaneliCONOLayout);
+        jPaneliCONOLayout.setHorizontalGroup(
+            jPaneliCONOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPaneliCONOLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonActualizarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelicono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPaneliCONOLayout.setVerticalGroup(
+            jPaneliCONOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonActualizarConexion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelicono, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonActualizarConexion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPaneliCONO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,8 +249,8 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonActualizarConexion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPaneliCONO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,20 +264,69 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void jButtonActualizarConexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarConexionActionPerformed
-        // TODO add your handling code here:
+        // actualizar datos de conexion
+        //y comprobar que funciona
+        try {
+            File archivo_configuracion = new File(CONFIG_TEXT_FILE);
+            if (archivo_configuracion.exists()) {
+                pro.load(new FileInputStream(archivo_configuracion));
+                usuario = pro.getProperty("usuario", usuario);
+                contrasenia = pro.getProperty("contrasenia", contrasenia);
+                bd = pro.getProperty("bd", bd);
+                ip = pro.getProperty("ip", ip);
+                puerto = pro.getProperty("puerto", puerto);
+
+                System.out.println("usuario: " + usuario);
+                System.out.println("contreña: " + contrasenia);
+                System.out.println("bd: " + bd);
+                System.out.println("ip: " + ip);
+                System.out.println("puerto: " + puerto);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+// guarda nuevo valores en fichereo de propiedades:
+            pro.setProperty("usuario", jTextFieldUsuario.getText());
+            pro.setProperty("contrasenia",   jTextFieldContrasenia.getText());
+            pro.setProperty("ip",     jTextFieldIp.getText());
+            pro.setProperty("bd",   jTextFieldBd.getText());
+            pro.setProperty("puerto",     jTextFieldPuerto.getText());
+        
+           try {
+               pro.store(new FileWriter(CONFIG_TEXT_FILE), "actualizacion de datos");
+               
+            MODELO.CConexion con = new MODELO.CConexion();
+             Connection cn;
+             try {
+                cn = con.estableceConexión();
+                
+                jLabelicono.setVisible((true));
+                 } catch (Exception e) {
+              
+            }
+         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+           
     }//GEN-LAST:event_jButtonActualizarConexionActionPerformed
 
     private void jTextFieldUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioKeyPressed
         // ir a otro jtext al pulsar enter
+        // fuente: https://www.youtube.com/watch?v=W0kvyqDJFyM
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jTextFieldContrasenia.requestFocus();
 
@@ -296,9 +409,12 @@ public class FormConfigurarConexion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelicono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPaneliCONO;
     private javax.swing.JTextField jTextFieldBd;
     private javax.swing.JTextField jTextFieldContrasenia;
     private javax.swing.JTextField jTextFieldIp;

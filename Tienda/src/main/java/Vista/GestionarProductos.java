@@ -31,7 +31,6 @@ import java.util.Map;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-
 /**
  *
  * @author JSBSAN
@@ -43,17 +42,19 @@ public class GestionarProductos extends javax.swing.JFrame {
      */
     public GestionarProductos() {
         initComponents();
-         //asigno icono al JPanel.
+        //asigno icono al JPanel.
         setIconImage(getIconImage());
-        
+
         listar();
 
     }
-   @Override
+
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/productos.png"));
         return retValue;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -466,42 +467,41 @@ public class GestionarProductos extends javax.swing.JFrame {
 
     private void jButtonGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarReporteActionPerformed
         // TODO add your handling code here:
-        
+
         CConexion con = new CConexion();
         con.mostrado = true;
         Connection cn;
-      cn = con.estableceConexión();
+        cn = con.estableceConexión();
         try {
             cn = con.estableceConexión();
-           // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
-            JasperReport reporte=(JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportProductos.jasper"));
-            JasperPrint jp = JasperFillManager.fillReport(reporte,null, cn);
-          JasperViewer jv = new JasperViewer(jp,false);
-          jv.setVisible(true);
+            // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportProductos.jasper"));
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, cn);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
         } catch (Exception e) {
-            System.err.println("Error al generar el reporte -> "+e.getMessage());
+            System.err.println("Error al generar el reporte -> " + e.getMessage());
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jButtonGenerarReporteActionPerformed
 
     private void jButtonGenerarReporteLIistaPVPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarReporteLIistaPVPActionPerformed
         // TODO add your handling code here:
-         CConexion con = new CConexion();
+        CConexion con = new CConexion();
         con.mostrado = true;
         Connection cn;
-      cn = con.estableceConexión();
+        cn = con.estableceConexión();
         try {
             cn = con.estableceConexión();
-           // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
-            JasperReport reporte=(JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportSoloListaPreciosProductos.jasper"));
-            JasperPrint jp = JasperFillManager.fillReport(reporte,null, cn);
-          JasperViewer jv = new JasperViewer(jp,false);
-       jv.setVisible(true);
-          
+            // String rutaReporte=System.getProperty("user.dir")+"/src/Reportes/reportProductos.jasper";
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(getClass().getResourceAsStream("/reportes/reportSoloListaPreciosProductos.jasper"));
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, cn);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+
         } catch (Exception e) {
-            System.err.println("Error al generar el reporte -> "+e.getMessage());
+            System.err.println("Error al generar el reporte -> " + e.getMessage());
         }
     }//GEN-LAST:event_jButtonGenerarReporteLIistaPVPActionPerformed
 
@@ -534,17 +534,10 @@ public class GestionarProductos extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-      
-        
-                      
-        
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
-
-
             public void run() {
                 new GestionarProductos().setVisible(true);
-
             }
         });
     }
