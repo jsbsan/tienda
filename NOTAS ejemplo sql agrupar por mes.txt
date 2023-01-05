@@ -1,0 +1,20 @@
+Comentarios:
+
+
+https://estradawebgroup.com/Post/-Como-obtener-los-registros-de-un-mes-determinado-en-SQL-Server-con-la-funcion-MONTH---/20373
+
+Este ejemplo utiliza la función MONTH() para extraer el mes de la columna shipped_date. Devuelve las ventas brutas por mes en 2017 utilizando la función SUMA() y la cláusula GROUP BY:
+
+SELECT MONTH(shipped_date) [month],
+    SUM(list_price * quantity) gross_sales
+FROM sales.orders o
+    INNER JOIN sales.order_items i ON i.order_id = o.order_id
+WHERE shipped_date IS NOT NULL
+    AND YEAR(shipped_date) = 2017
+GROUP BY MONTH(shipped_date)
+ORDER BY [month];
+
+************************************
+OTRA MAS SIMPLE:
+************************************
+SELECT * FROM tabla WHERE MONTH(colfecha) = 10 AND YEAR(colfecha) = 2016
