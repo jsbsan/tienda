@@ -13,9 +13,44 @@ public class Venta {
     int id;
     String idproducto;
     String descripcion;
-    String pvp;
-    String cantidad;
-    String iva;
+    float pvp;
+    float cantidad;
+    float iva;
+    
+    public float importepvp() {
+        // el valor del iva es un entero
+        float valor =Comunes.comun.Redondeo2decimales(pvp * cantidad );
+        return valor;
+    }
+
+    public float importeiva() {
+        float valor =Comunes.comun.Redondeo2decimales(pvp * cantidad * iva);
+        System.out.println("Valor calculado del iva: "+ valor);
+        return valor;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIdproducto(String idproducto) {
+        this.idproducto = idproducto;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPvp(float pvp) {
+        this.pvp = pvp;
+    }
+
+    public void setCantidad(float cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setIva(float iva) {
+        this.iva = iva;
+    }
 
     public int getId() {
         return id;
@@ -29,42 +64,17 @@ public class Venta {
         return descripcion;
     }
 
-    public String getPvp() {
+    public float getPvp() {
         return pvp;
     }
 
-    public String getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public String getIva() {
+    public float getIva() {
         return iva;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setIdproducto(String idproducto) {
-        this.idproducto = idproducto;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public void setPvp(String pvp) {
-        this.pvp = pvp;
-    }
-
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void setIva(String iva) {
-        this.iva = iva;
-    }
-    
 
     
 }

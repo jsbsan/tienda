@@ -9,13 +9,15 @@ package Comunes;
  * @author jsbsan
  */
 public class comun {
-    
-/**
- * Cambia el numero dado en formato cadena, eliminando el punto y cambia la coma decimal por el punto decimal.
- * @param s
- * @return cadena con un numero con punto decimal y sin coma de millares.
- */
- public  static String cambiaComaPorPunto(String s) {
+
+    /**
+     * Cambia el numero dado en formato cadena, eliminando el punto y cambia la
+     * coma decimal por el punto decimal.
+     *
+     * @param s
+     * @return cadena con un numero con punto decimal y sin coma de millares.
+     */
+    public static String cambiaComaPorPunto(String s) {
         String c;
         c = s.replaceAll("\\.", "");
         c = c.replaceAll("\\,", ".");
@@ -23,7 +25,8 @@ public class comun {
         return c;
     }
 
-
-
-
+    public static float Redondeo2decimales(float dato) {
+        Float valor = Math.round(dato * 100f) / 100f;
+        return valor;
+    }
 }
