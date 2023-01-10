@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `TIENDA` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `TIENDA`;
 -- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: TIENDA
@@ -29,9 +31,10 @@ CREATE TABLE `PRODUCTO` (
   `pvp` float DEFAULT NULL,
   `coste` float DEFAULT NULL,
   `fecha` date DEFAULT NULL,
+  `iva` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_PRODUCTO_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +43,7 @@ CREATE TABLE `PRODUCTO` (
 
 LOCK TABLES `PRODUCTO` WRITE;
 /*!40000 ALTER TABLE `PRODUCTO` DISABLE KEYS */;
-INSERT INTO `PRODUCTO` VALUES (1,'c','casa',10,5,'2022-01-01'),(2,'c','casa',10,5,'2022-01-01'),(3,'p','perrito',2,1,'2022-02-01'),(4,'p','perrito',2,1,'2022-02-01'),(5,'p','perrito',2,1,'2022-02-01'),(6,'023p','gato',19,15,'2022-12-31'),(7,'023p','gato',19,15,'2022-12-31'),(8,'023p32','Gatera',18.7,15.25,'2022-12-31');
+INSERT INTO `PRODUCTO` VALUES (1,'c','casa',10,5,'2022-01-01',NULL),(3,'p','perrito',2,1,'2022-02-01',NULL),(7,'023p','gato',19,15,'2022-12-31',NULL),(8,'023p32','Gatera',18.7,15.25,'2022-12-31',NULL),(9,'cas','casa de ca',23,123,'2022-12-31',2),(11,'foto','foto de camara',25,18,'2022-12-17',16),(12,'casetilla','ventas dw',12.58,10.01,'2022-12-01',17.17),(14,'animales','camas de perros',6.8,3,'2023-12-01',16),(16,'852','Casita de Perro',585.03,25.01,'2022-12-17',14.01);
 /*!40000 ALTER TABLE `PRODUCTO` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 20:55:12
+-- Dump completed on 2023-01-10 20:49:43

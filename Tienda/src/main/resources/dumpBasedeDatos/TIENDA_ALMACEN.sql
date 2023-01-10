@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `TIENDA` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `TIENDA`;
 -- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: TIENDA
@@ -16,28 +18,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `ALMACEN`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `ALMACEN`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
+CREATE TABLE `ALMACEN` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ingresoUsuario` varchar(50) NOT NULL,
-  `ingresoContrasenia` varchar(50) NOT NULL,
+  `idproducto` varchar(45) DEFAULT NULL,
+  `descripcion` varchar(150) DEFAULT NULL,
+  `cantidad` float DEFAULT NULL,
+  `observaciones` varchar(150) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `ALMACEN`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'admin','contra2022');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `ALMACEN` WRITE;
+/*!40000 ALTER TABLE `ALMACEN` DISABLE KEYS */;
+INSERT INTO `ALMACEN` VALUES (1,'023p32','Gatera',2,'2023-01-10-20:34:0675','2023-01-10'),(2,'cas','casa de ca',5,'2023-01-10-20:37:37-86','2023-01-10'),(3,'animales','camas de perros',2,'2023-01-10-20:37:37-86','2023-01-10'),(4,'foto','foto de camara',3,'2023-01-10-20:39:36-22','2023-01-10'),(5,'casetilla','ventas dw',8,'2023-01-10-20:39:36-22','2023-01-10'),(6,'cas','casa de ca',-8,'2023-01-10-20:42:14-93','2023-01-10');
+/*!40000 ALTER TABLE `ALMACEN` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27 20:55:12
+-- Dump completed on 2023-01-10 20:49:43

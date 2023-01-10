@@ -16,18 +16,28 @@ public class Venta {
     float pvp;
     float cantidad;
     float iva;
-    
+    float coste;
+
+    public float getCoste() {
+        return coste;
+    }
+
+    public void setCoste(float coste) {
+        this.coste = coste;
+    }
+
     public float importepvp() {
         // el valor del iva es un entero
-        float valor =Comunes.comun.Redondeo2decimales(pvp * cantidad );
+        float valor = Comunes.comun.Redondeo2decimales(pvp * cantidad);
         return valor;
     }
 
     public float importeiva() {
-        float valor =Comunes.comun.Redondeo2decimales(pvp * cantidad * iva);
-        System.out.println("Valor calculado del iva: "+ valor);
+        float valor = Comunes.comun.Redondeo2decimales(pvp * cantidad * iva);
+        System.out.println("Valor calculado del iva: " + valor);
         return valor;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -76,5 +86,4 @@ public class Venta {
         return iva;
     }
 
-    
 }

@@ -45,12 +45,14 @@ public class GestionTienda extends javax.swing.JFrame {
     float total;
 
     int filaSeleccionadaVenta = -1;
+    String fechaRecibo = "";
 
     public GestionTienda() {
         initComponents();
         //asigno icono al JPanel 2º parte
         setIconImage(getIconImage());
-        jLabelFecha.setText(fechaActual());
+        fechaRecibo = fechaActual();
+        jLabelFecha.setText(fechaRecibo);
         jButtonBorrarLineaVenta.setEnabled(false);
     }
 //poner icono en JPanel 1º parte
@@ -227,8 +229,13 @@ public class GestionTienda extends javax.swing.JFrame {
             }
         });
 
-        jButtonGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/save.png"))); // NOI18N
-        jButtonGuardarVenta.setText("Guardar");
+        jButtonGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/imprimir.png"))); // NOI18N
+        jButtonGuardarVenta.setText("Imprimir y Guardar");
+        jButtonGuardarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonGuardarVentaMouseClicked(evt);
+            }
+        });
         jButtonGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGuardarVentaActionPerformed(evt);
@@ -300,7 +307,7 @@ public class GestionTienda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(346, 346, 346)
@@ -525,7 +532,75 @@ public class GestionTienda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+// GUARDAR VENTA EN TABLA DE VENTAS
+//variables:
+        CConexion con = new CConexion();
+        con.mostrado = true;
+        Connection cn;
+        Statement st;
+        String sql = "";
+
+//crear un id unico con la fecha y hora añadiendole un nuemro aleatorio de 0 a 100
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+        String idventa = dateFormat.format(new Date()) + "-" + String.valueOf((int) (Math.random() * 100 + 1));
+
+// repetir por todos los conceptos que haya de venta
+        for (Venta v : listaVenta) {
+            sql = "insert into TIENDA.VENTA (";
+            sql = sql + "fecha,idventa,idproducto,cantidad,pvpud,pvptotal,ivaud,ivatotal,importetotal,costeud,costetotal) values ('";
+            sql = sql + fechaRecibo + "','";
+            sql = sql + idventa + "','";
+            sql = sql + v.getIdproducto() + "','";
+            sql = sql + String.valueOf(v.getCantidad()) + "','";
+            sql = sql + String.valueOf(v.getPvp()) + "','";
+            sql = sql + String.valueOf(v.getCantidad() * v.getPvp()) + "','";
+            sql = sql + String.valueOf(v.getIva()) + "','";
+            sql = sql + String.valueOf(v.getCantidad() * v.getPvp() * v.getIva() / 100) + "','";
+            sql = sql + String.valueOf(v.getCantidad() * v.getPvp() + v.getCantidad() * v.getPvp() * v.getIva() / 100) + "','";
+            sql = sql + String.valueOf(v.getCoste()) + "','";
+            sql = sql + String.valueOf(v.getCoste() * v.getCantidad()) + "')";
+            System.out.printf("***********************************\n");
+            System.out.printf("Cadena Venta: " + sql + "\n");
+            System.out.printf("***********************************\n");
+            //guardar en tabala:
+            try {
+                cn = con.estableceConexión();
+                st = cn.createStatement();
+                st.executeUpdate(sql);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e.toString());
+                JOptionPane.showMessageDialog(null, "Error al intentar agregar Venta, revise los valores introducidos");
+
+            }
+
+            //agregar consumo en tabla de almacen.
+            sql = "insert into TIENDA.ALMACEN (";
+            sql = sql + "idproducto,descripcion,cantidad,observaciones,fecha) values ('";
+            sql = sql + v.getIdproducto() + "','";
+            sql = sql + v.getDescripcion() + "','"; // como descripcion pongo el ide venta
+            sql = sql + String.valueOf(-v.getCantidad()) + "','"; // como es una venta, le pongo negativa la salida
+            sql = sql + idventa + "','"; // como observacion pongo el ide venta
+            sql = sql + fechaRecibo + "')";
+
+            try {
+                cn = con.estableceConexión();
+                st = cn.createStatement();
+                st.executeUpdate(sql);
+            } catch (Exception e) {
+                System.out.println("Error: " + e.toString());
+                JOptionPane.showMessageDialog(null, "Error al intentar agregar Salida de Almacen, revise los valores introducidos");
+            }
+
+        }
+
+// GUARDAR SALIDA DE ALMACEN DE MATERIALES
+// BORRAR TABLA DE VENTA Y RESULTADOS
+        limpiarVenta();
+//actualizar fecha recibo:
+        fechaRecibo = fechaActual();
+
+        jLabelFecha.setText(fechaRecibo);
 
 
     }//GEN-LAST:event_jButtonGuardarVentaActionPerformed
@@ -533,30 +608,33 @@ public class GestionTienda extends javax.swing.JFrame {
     private void jButtonBorrarLineaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarLineaVentaActionPerformed
         // TODO add your handling code here:
         jButtonBorrarLineaVenta.setEnabled(false);
-        
-          listaVenta.remove(filaSeleccionadaVenta);
-    // actualizar tabla de venta   
-    actualizarTablaVenta();
-            jLabelSubtotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotal)));
-            jLabelIva.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotaliva)));
-            jLabelTotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(total)));
-        
+
+        listaVenta.remove(filaSeleccionadaVenta);
+        // actualizar tabla de venta   
+        actualizarTablaVenta();
+        jLabelSubtotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotal)));
+        jLabelIva.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotaliva)));
+        jLabelTotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(total)));
+
     }//GEN-LAST:event_jButtonBorrarLineaVentaActionPerformed
 
     private void jButtonLimpiarTodaLaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarTodaLaVentaActionPerformed
         // TODO add your handling code here:
+        limpiarVenta();
+    }//GEN-LAST:event_jButtonLimpiarTodaLaVentaActionPerformed
+
+    public void limpiarVenta() {
         //borrado de todas las ventas y reescribir valores
         listaVenta.clear();
         subtotal = 0;
         subtotaliva = 0;
         total = 0;
-
+        jButtonBorrarLineaVenta.setEnabled(false);
         actualizarTablaVenta();
         jLabelSubtotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotal)));
         jLabelIva.setText(Float.toString(Comunes.comun.Redondeo2decimales(subtotaliva)));
         jLabelTotal.setText(Float.toString(Comunes.comun.Redondeo2decimales(total)));
-    }//GEN-LAST:event_jButtonLimpiarTodaLaVentaActionPerformed
-
+    }
     private void jTextFieldBuscarPorDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBuscarPorDescripcionKeyPressed
         // TODO add your handling code here:
         // si pulso 
@@ -710,6 +788,10 @@ public class GestionTienda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableVentaMouseClicked
 
+    private void jButtonGuardarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarVentaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonGuardarVentaMouseClicked
+
     public void actualizarTablaVenta() {
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) jTableVenta.getModel();
@@ -754,16 +836,24 @@ public class GestionTienda extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionTienda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionTienda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionTienda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionTienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionTienda.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
