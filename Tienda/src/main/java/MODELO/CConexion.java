@@ -85,4 +85,12 @@ public class CConexion {
         return conectar;
     }
 
+    public void desconecta() {
+        try {
+            conectar.close();
+            //JOptionPane.showMessageDialog(null, "DESCONECTADO DE LA BASE DE DATOS");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Problemas con la desconexión: " + e.toString());
+        }
+    }
 }
