@@ -29,6 +29,7 @@ public class ENTRADA extends javax.swing.JFrame {
     GestionarProductos gestiproductos = new GestionarProductos();
     GestionAlmacen gestialmacen = new GestionAlmacen();
     Informes informes = new Informes();
+    FormConfigurarConexion  gestionConexion = new FormConfigurarConexion();
 
     /**
      * Creates new form ENTRADA
@@ -53,6 +54,11 @@ public class ENTRADA extends javax.swing.JFrame {
         MODELO.CConexion objetoConexion = new MODELO.CConexion();
 
         objetoConexion.estableceConexión();
+// Nota: cierre de formulario cierra la aplicacion
+// -> en la propiedad DefaultCloseOperation poner valor "dispose"
+// -> en el principal DefaultCloseOperation poner valor "exit_on_close"
+// fuente: https://www.lawebdelprogramador.com/foros/Java/1456635-Cerrar-Aplicacion-cuando-cierre-el-ultimo-formulario.html
+
 
     }
 
@@ -335,6 +341,7 @@ public class ENTRADA extends javax.swing.JFrame {
 
     private void jButtonConfigurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfigurarActionPerformed
         // TODO add your handling code here:
+        gestionConexion.setVisible(true);
     }//GEN-LAST:event_jButtonConfigurarActionPerformed
 
     private void jBtoListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtoListadoActionPerformed
